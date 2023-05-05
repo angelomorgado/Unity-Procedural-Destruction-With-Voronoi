@@ -23,6 +23,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace GK {
 	public class Shoot : MonoBehaviour {
@@ -35,15 +36,15 @@ namespace GK {
 		float lastShot = -1000.0f;
 
 		void Update() {
-			if (Input.GetMouseButton(0)) {
+			var shooting = CrossPlatformInputManager.GetButton("Fire1");
+
+			if (shooting) {
 				if (Time.time - lastShot >= MinDelay) {
 					lastShot = Time.time;
 
 					var go = Instantiate(Projectile, SpawnLocation.position, SpawnLocation.rotation);
 
 					go.GetComponent<Rigidbody>().velocity = InitialSpeed * Camera.main.transform.forward;
-
-					// Debug.Log("Shoot");
 				}
 			} 
 		}
